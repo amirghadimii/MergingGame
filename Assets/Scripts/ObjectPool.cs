@@ -10,6 +10,7 @@ public class ObjectPool : MonoBehaviour
     
     private void Awake()
     {
+    //this is not a good definition for singlton pattern - search about it
         SharedInstance = this;
     }
 
