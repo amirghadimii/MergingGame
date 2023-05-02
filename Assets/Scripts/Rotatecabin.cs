@@ -16,6 +16,7 @@ public class Rotatecabin : MonoBehaviour
     {
         if (!IsStop)
         {
+        //you don't need to .gameObject and again cache transform in a variable
             this.gameObject.transform.Rotate(new Vector3(0, 0, Speed));
         }
    
