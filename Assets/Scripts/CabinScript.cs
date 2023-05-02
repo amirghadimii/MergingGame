@@ -6,11 +6,14 @@ using UnityEngine;
 
 public class CabinScript : MonoBehaviour
 {
-    [SerializeField] public SpriteRenderer _spriteRenderer;
+    [SerializeField] public SpriteRenderer _spriteRenderer;// always use [SerializeField] with private variables
 
+//deete unnecessary comments
     // Start is called before the first frame update
     public int LevelCabin = 0;
     [SerializeField] ColorScriptbleObj colorScriptble;
+    
+    //try to place same type of definition togater - i mean don't use public between to [SerializeField]
 
     private void OnEnable()
     {
