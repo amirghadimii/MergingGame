@@ -13,13 +13,13 @@ public class BaseManage : MonoBehaviour
 
     private MakeMoneyCompany _makeMoneyCompany;
     [SerializeField] private UiManage _uiManage;
-    [SerializeField] private List<bool> AllCabin;
-    [SerializeField] private List<Vector2> AllCabinVector2;
-    [SerializeField] private List<CabinScript> allCabinScripts;
-    [SerializeField] private GameObject CabinPrefab;
-    [SerializeField] private GameObject ParentRef;
-    [SerializeField] private const int TimeUpDelay = 6;
-    [Inject] private _ImergeService _imergeService;
+    [SerializeField] private List<bool> AllCabin;//naming issue _allCabin
+    [SerializeField] private List<Vector2> AllCabinVector2;//naming issue _allCabinVector2
+    [SerializeField] private List<CabinScript> allCabinScripts;//naming issue _allCabinScripts
+    [SerializeField] private GameObject CabinPrefab;//naming issue _cabinPrefab
+    [SerializeField] private GameObject ParentRef;//naming issue _parentRef
+    [SerializeField] private const int TimeUpDelay = 6;//naming issue _timeUpDelay
+    [Inject] private _ImergeService _imergeService;//nterface name issue -> why name starts with _ ?!?!
     [Inject] private IAddService _IAddService;
 
     #endregion
@@ -37,17 +37,20 @@ public class BaseManage : MonoBehaviour
         GameObject Ref =
             ObjectPooler.Generate(CabinPrefab, CabinPrefab.transform.position, CabinPrefab.transform.rotation);
         //      = ObjectPool.SharedInstance.PoolObjectIns(1);
-        Ref.transform.parent = ParentRef.transform;
+        
+        //cache Ref.transform in var refTransform=Ref.transform; and use it 
+        
+        Ref.transform.parent = ParentRef.transform;// use SetParent Func.
         Ref.transform.localPosition = AllCabinVector2[0];
         Ref.transform.localScale = new Vector3(1.6f, 1.6f, 1.6f);
         Ref.transform.localRotation = quaternion.identity;
-        Ref.gameObject.SetActive(true);
+        Ref.gameObject.SetActive(true);//ref is a gameobject don't need to .gameObject
         allCabinScripts[0] = Ref.GetComponent<CabinScript>();
         AllCabin[0] = true;
 
 
         _makeMoneyCompany = new MakeMoneyCompany();
-        StartCoroutine("TimeMoneyUp");
+        StartCoroutine("TimeMoneyUp");//use nameOf() function nstead of use string explicitly
     }
 
     private void OnDisable()
@@ -71,13 +74,13 @@ public class BaseManage : MonoBehaviour
 
     public void ActionAdd(int i)
     {
-        if (_makeMoneyCompany.Money >= 10)
+        if (_makeMoneyCompany.Money >= 10)//never use magic number => always create const variable with miningfull name for this type of values
         {
             GameObject Ref = ObjectPooler.Generate(CabinPrefab, CabinPrefab.transform.position,
                 CabinPrefab.transform.rotation);
             Ref.transform.parent = ParentRef.transform;
             Ref.transform.localPosition = AllCabinVector2[i];
-            Ref.transform.localScale = new Vector3(1.6f, 1.6f, 1.6f);
+            Ref.transform.localScale = new Vector3(1.6f, 1.6f, 1.6f);// same as previous comment
             Ref.transform.localRotation = quaternion.identity;
             Ref.gameObject.SetActive(true);
             _makeMoneyCompany.MoneyDown();
@@ -93,7 +96,7 @@ public class BaseManage : MonoBehaviour
         {
             yield return new WaitForSeconds(TimeUpDelay);
             _makeMoneyCompany.MoneyUp();
-            _uiManage.ChangeMoneyTxt(_makeMoneyCompany.Money);
+            _uiManage.ChangeMoneyTxt(_makeMoneyCompany.Money);// it's better to change ui values with events for exp OnCoinChange - update ui in loop such as update or coroutine will kill performance especialyy with text mesh pro - it renders again every frame you change value
         }
     }
 
