@@ -9,6 +9,7 @@ public class RotateFerriswheel : MonoBehaviour
     {
         if (!Rotatecabin.IsStop)
         {
+        //cache transform in a variable and use it intead of call this.tranform in every frame - it's a performance killer
             this.transform.Rotate(this.transform.localRotation.x, this.transform.localRotation.y,
                 -Rotatecabin.Speed);
         }
