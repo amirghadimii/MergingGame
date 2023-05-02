@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface _ImergeService
+// seperate interface and classes in files and never have more than one class or interface in one file - try to use name space
+public interface _ImergeService // naing issue- interface always start with I and next letter is capital IMergeService
 {
     public event Action<int, int> MergeValuei_j;
     public void MergeElemet(List<CabinScript> allCabinScripts);
